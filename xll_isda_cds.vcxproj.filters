@@ -18,6 +18,9 @@
     <ClInclude Include="xll_isda_cds.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="jpmcds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="xll_isda_cds.cpp">
