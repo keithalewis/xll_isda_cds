@@ -187,7 +187,25 @@ HANDLEX WINAPI xll_jpmcds_build_ir_zero_curve(double valueDate, LPOPER type, _FP
     handlex h;
 
     try {
-        TCurve* p = JpmcdsBuildIRZeroCurve();
+        TCurve* p = JpmcdsBuildIRZeroCurve(); calls...
+        {
+        zcurveIni = JpmcdsNewTCurve(valueDate, 0, (double) 1L, JPMCDS_ACT_365F);
+        zcurveCash = JpmcdsZCCash(zcurveIni, cashDates, cashRates, nCash, mmDCC);
+        zcurveSwap = JpmcdsZCSwaps(zcurveCash,
+                            NULL,   // discZC 
+                            swapDates,
+                            swapRates,
+                            nSwap,
+                            fixedSwapFreq,
+                            floatSwapFreq,
+                            fixedSwapDCC,
+                            floatSwapDCC,
+                            fwdLength,
+                            badDayConv,
+                            holidayFile);
+
+            JpmcdsZCAddSwaps
+        }
     }
     catch (const std::exception& ex) {
         XLL_ERROR(ex.what());

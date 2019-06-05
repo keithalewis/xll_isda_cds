@@ -116,12 +116,10 @@ namespace Jpmcds {
         };
 
         struct InterestRateSwap {
-            TDateInterval di;
-            DAY_COUNT_CONVENTION fixedDcc, floatDcc;
-            FREQUENCY fixedFreq, floatFreq;
-            int days; // T + days settlement
-            double rate;
+            InterestRateFixedLeg fixedLeg;
+            InterestRateFloatLeg floatLeg;
         };
+
     } // namespace Instrument
 
     class Curve {
