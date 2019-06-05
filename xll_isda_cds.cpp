@@ -29,7 +29,7 @@ XLL_ENUM_DOC(INTERPOLATION_TYPE::FLAT_FORWARDS, INTERPOLATION_TYPE_FLAT_FORWARDS
 
 AddIn xai_jpmcds_tcurve(
     Function(XLL_HANDLE, L"?xll_jpmcds_tcurve", L"JPMCDS.TCURVE")
-    .Arg(XLL_LONG, L"baseDate", L"is the base date or the curve.")
+    .Arg(XLL_LONG, L"baseDate", L"is the base date of the curve.")
     .Arg(XLL_FP, L"dates", L"is an array of curve dates.")
     .Arg(XLL_FP, L"rates", L"is an array of curve rates.")
     .Arg(XLL_LONG, L"basis", L"is the rate basis from the RATE_BASIS_* enumeration.")
