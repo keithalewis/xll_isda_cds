@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\badday.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\bastypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\bsearch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\buscache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\busday.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\cashflow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\cdate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\cds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\cdsone.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\cerror.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\cfileio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\cfinanci.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\cgeneral.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\cheaders.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\cmemory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\contingentleg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\convert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\cx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\cxbsearch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\cxdatelist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\cxzerocurve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\date_sup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\dateadj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\dateconv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\datelist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\defaulted.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\dtlist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\feeleg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\fltrate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\gtozc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\interp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\ldate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\lintrp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\lprintf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\mdydate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\metric.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\rtbrent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\schedule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\streamcf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\strutil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\stub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\tcurve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\timeline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\yearfrac.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\zcprvt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\zerocurve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\zr2coup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\include\isda\zr2fwd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\zcswdate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\badday.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\bsearch.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\buscache.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\busday.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\cashflow.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\cds.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\cdsbootstrap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\cdsone.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\cerror.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\cfileio.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\cfinanci.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\cmemory.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\contingentleg.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\convert.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\cx.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\cxbsearch.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\cxdatelist.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\cxzerocurve.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\date_sup.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\dateadj.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\dateconv.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\datelist.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\defaulted.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\dtlist.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\feeleg.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\fltrate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\gtozc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\interpc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\ldate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\linterpc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\lintrp1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\lprintf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\lscanf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\rtbrent.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\schedule.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\streamcf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\strutil.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\stub.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\tcurve.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\timeline.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\version.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\yearfrac.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\zcall.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\zcswap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\zcswdate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\zcswutil.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\zerocurve.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\zr2coup.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\zr2fwd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\bsearch.inc">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\xll_isda_cds\isda_cds_model_c_v1.8.2\lib\src\lintrp1.inc">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

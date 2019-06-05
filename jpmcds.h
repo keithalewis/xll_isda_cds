@@ -2,12 +2,19 @@
 #pragma once
 #include <limits>
 #include <utility>
+#include <vector>
 #include "ldate.h"
 #include "tcurve.h"
 
 namespace Jpmcds {
 
-    /*------- Calculating discount factors----------*/
+    enum FREQUENCY {
+        FREQ_ANNUAL = 1,
+        FREQ_SEMIANNUAL = 2,
+        FREQ_QUARTERLY = 4,
+        FREQ_MONTHLY = 12,
+    };
+    
     enum RATE_BASIS {
         CONTINUOUS_BASIS = JPMCDS_CONTINUOUS_BASIS,   /* Means continuous compounding */
         DISCOUNT_RATE    = JPMCDS_DISCOUNT_RATE,      /* Discount RATE (not factor) K's b-Day*/
@@ -27,44 +34,128 @@ namespace Jpmcds {
         EFFECTIVE_RATE = JPMCDS_EFFECTIVE_RATE, /* Effective rate - YF always 1 */
     };
 
+    enum ROLL_CONVENTION {
+        ROLL_FOLLOW   = JPMCDS_BAD_DAY_FOLLOW,
+        ROLL_PREVIOUS = JPMCDS_BAD_DAY_PREVIOUS,
+        ROLL_NONE     = JPMCDS_BAD_DAY_NONE,
+        ROLL_MODIFIED = JPMCDS_BAD_DAY_MODIFIED,
+    };
+
     /* Interpolation methods which can be applied to a zero curve only. */
     enum INTERPOLATION_TYPE {
         LINEAR_FORWARDS = JPMCDS_LINEAR_FORWARDS, /* Linear forward interpolation  */
         FLAT_FORWARDS = JPMCDS_FLAT_FORWARDS,     /* Flat forward interpolation  */
     };
 
-    class TCurve_ {
+    namespace Instrument {
+
+        // Short term cash deposit.
+        class MoneyMarket {
+            TDateInterval tenor; // e.g., TDateInterval{3, 'M'}
+            DAY_COUNT_CONVENTION dcc;
+            ROLL_CONVENTION roll;
+            int days; // T + days settlement
+            double rate;
+            TDate date_[2]; // settlement, maturity
+            double cash_[2]; // cash flows
+        public:
+            MoneyMarket(TDateInterval tenor, DAY_COUNT_CONVENTION dcc = ACT_360, ROLL_CONVENTION = ROLL_FOLLOW, int days = 1)
+                : tenor(tenor), dcc(dcc), days(days)
+            { }
+            MoneyMarket(const MoneyMarket&) = default;
+            MoneyMarket& operator=(const MoneyMarket&) = default;
+            ~MoneyMarket()
+            { }
+
+            // Set rate and cash flow dates.
+            MoneyMarket& set(double rate_, TDate valuation_)
+            {
+                rate = rate_;
+                TDateAdjIntvl ai;
+                ai.interval = TDateInterval{days,'D'};
+                ai.isBusDays = JPMCDS_DATE_ADJ_TYPE_BUSINESS;
+                ai.badDayConv = roll;
+                ai.holidayFile = nullptr;
+                JpmcdsDtFwdAdj(valuation_, &ai, date_ + 0);
+                ai.interval = tenor;
+                JpmcdsDtFwdAdj(date_[0], &ai, date_ + 1);
+                cash_[0] = -1;
+                cash_[1] = 1 + rate;//* dcf
+
+                return *this;
+            }
+            int size() const
+            {
+                return 2;
+            }
+            const TDate* date() const
+            {
+                return &date_[0];
+            }
+            const double* cash() const
+            {
+                return &cash_[0];
+            }
+        };
+
+        struct InterestRateFixedLeg {
+            TDateInterval tenor;
+            FREQUENCY freq;
+            DAY_COUNT_CONVENTION dcc;
+            ROLL_CONVENTION roll;
+            int days; // T + days settlement
+            double rate; // coupon
+        };
+
+        struct InterestRateFloatLeg {
+            TDateInterval tenor;
+            FREQUENCY freq;
+            DAY_COUNT_CONVENTION dcc;
+            ROLL_CONVENTION roll;
+            int days; // T + days settlement
+        };
+
+        struct InterestRateSwap {
+            TDateInterval di;
+            DAY_COUNT_CONVENTION fixedDcc, floatDcc;
+            FREQUENCY fixedFreq, floatFreq;
+            int days; // T + days settlement
+            double rate;
+        };
+    } // namespace Instrument
+
+    class Curve {
         ::TCurve* p;
     public:
-        TCurve_()
+        Curve()
             : p(nullptr)
         { }
-        TCurve_(::TDate baseDate, int numPts, RATE_BASIS basis, DAY_COUNT_CONVENTION dayCountConv)
+        Curve(::TDate baseDate, int numPts, RATE_BASIS basis, DAY_COUNT_CONVENTION dayCountConv)
             : p(JpmcdsNewTCurve(baseDate, numPts, basis, dayCountConv))
         { }
-        TCurve_(TDate baseDate, TDate *dates, double *rates, int numPts, RATE_BASIS basis, DAY_COUNT_CONVENTION dayCountConv)
+        Curve(TDate baseDate, TDate *dates, double *rates, int numPts, RATE_BASIS basis, DAY_COUNT_CONVENTION dayCountConv)
             : p(JpmcdsMakeTCurve(baseDate, dates, rates, numPts, basis, dayCountConv))
         { }
-        TCurve_(::TCurve* p)
+        Curve(::TCurve* p)
             : p(::JpmcdsCopyCurve(p))
         { }
-        TCurve_(const TCurve_& curve)
-            : TCurve_(curve.p)
+        Curve(const Curve& curve)
+            : Curve(curve.p)
         { }
-        TCurve_& operator=(const TCurve_& curve)
+        Curve& operator=(const Curve& curve)
         {
-            return *this = TCurve_(curve);
+            return *this = Curve(curve);
         }
-        TCurve_(TCurve_&& curve) noexcept
+        Curve(Curve&& curve) noexcept
             : p(std::exchange(curve.p, nullptr))
         { }
-        TCurve_& operator=(TCurve_&& curve) noexcept
+        Curve& operator=(Curve&& curve) noexcept
         {
             std::swap(p, curve.p);
 
             return *this;
         }
-        ~TCurve_()
+        ~Curve()
         {
             if (p)
                 JpmcdsFreeTCurve(p);

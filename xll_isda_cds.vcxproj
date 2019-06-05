@@ -166,7 +166,7 @@
     <ClCompile Include="xll_isda_cds.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\isda_cds_model\isda_cds_model.vcxproj">
+    <ProjectReference Include="isda_cds_model.vcxproj">
       <Project>{9dc7948a-2324-42a1-920b-66e39cc4321a}</Project>
     </ProjectReference>
     <ProjectReference Include="xll12\xll12.vcxproj">
