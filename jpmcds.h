@@ -50,17 +50,18 @@ namespace Jpmcds {
     namespace Instrument {
 
         // Short term cash deposit.
-        class MoneyMarket {
+        struct MoneyMarket {
             TDateInterval tenor; // e.g., TDateInterval{3, 'M'}
             DAY_COUNT_CONVENTION dcc;
             ROLL_CONVENTION roll;
             int days; // T + days settlement
             double rate;
+        private:
             TDate date_[2]; // settlement, maturity
             double cash_[2]; // cash flows
         public:
-            MoneyMarket(TDateInterval tenor, DAY_COUNT_CONVENTION dcc = ACT_360, ROLL_CONVENTION = ROLL_FOLLOW, int days = 1)
-                : tenor(tenor), dcc(dcc), days(days)
+            MoneyMarket(TDateInterval tenor, DAY_COUNT_CONVENTION dcc = ACT_360, ROLL_CONVENTION roll = ROLL_FOLLOW, int days = 3)
+                : tenor(tenor), dcc(dcc), roll(roll), days(days)
             { }
             MoneyMarket(const MoneyMarket&) = default;
             MoneyMarket& operator=(const MoneyMarket&) = default;
@@ -75,14 +76,20 @@ namespace Jpmcds {
                 ai.interval = TDateInterval{days,'D'};
                 ai.isBusDays = JPMCDS_DATE_ADJ_TYPE_BUSINESS;
                 ai.badDayConv = roll;
-                ai.holidayFile = nullptr;
+                ai.holidayFile = const_cast<char*>("NONE");
                 JpmcdsDtFwdAdj(valuation_, &ai, date_ + 0);
                 ai.interval = tenor;
                 JpmcdsDtFwdAdj(date_[0], &ai, date_ + 1);
                 cash_[0] = -1;
-                cash_[1] = 1 + rate;//* dcf
+                double dcf;
+                JpmcdsDayCountFraction(date_[0],date_[1], dcc, &dcf);
+                cash_[1] = 1 + rate*dcf;
 
                 return *this;
+            }
+            TDate maturity() const
+            {
+                return date_[1];
             }
             int size() const
             {
@@ -104,7 +111,19 @@ namespace Jpmcds {
             DAY_COUNT_CONVENTION dcc;
             ROLL_CONVENTION roll;
             int days; // T + days settlement
-            double rate; // coupon
+            double rate; // par coupon
+            InterestRateFixedLeg(TDateInterval tenor, FREQUENCY freq, DAY_COUNT_CONVENTION dcc, ROLL_CONVENTION roll, int days)
+                : tenor(tenor), freq(freq), dcc(dcc), roll(roll), days(days)
+            { }
+            InterestRateFixedLeg(const InterestRateFixedLeg&) = default;
+            InterestRateFixedLeg& operator=(const InterestRateFixedLeg&) = default;
+            ~InterestRateFixedLeg()
+            { }
+            // Set par coupon and cash flow dates.
+            InterestRateFixedLeg& set(TDate valuation, double rate)
+            {
+                return *this;
+            }
         };
 
         struct InterestRateFloatLeg {
