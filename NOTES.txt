@@ -1,1 +1,3 @@
 Pass in dates as LONG instead of double?
+
+https://developers.opengamma.com/quantitative-research/Interest-Rate-Instruments-and-Market-Conventions.pdf

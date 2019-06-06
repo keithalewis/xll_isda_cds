@@ -97,6 +97,66 @@ HANDLEX WINAPI xll_jpmcds_instrument_money_market_set(HANDLEX h, double rate, do
 }
 // MONEY.MARKET.CASH.FLOWS
 
+AddIn xai_jpmcds_instrument_interest_rate_swap(
+    Function(XLL_HANDLE, L"?xll_jpmcds_instrument_interest_rate_swap", L"JPMCDS.INSTRUMENT.INTEREST.RATE.SWAP")
+    .Arg(XLL_LONG, L"count", L"is the number of units in the tenor.")
+    .Arg(XLL_CSTRING4, L"unit", L"is the unit corresponding ot count.")
+    .Arg(XLL_LONG, L"freq", L"is the payment frequency from the FREQ_* enumeration.")
+    .Arg(XLL_LONG, L"dcc", L"is the day count convention. Default is Actual/360")
+    .Arg(XLL_LONG, L"roll", L"is the rolling convention for payment dates. Default is modified following business day.")
+    .Arg(XLL_LONG, L"days", L"is the number of days it takes to settle. Default is 3.")
+    .Uncalced()
+    .FunctionHelp(L"Return a handle to a swap instrument.")
+    .Category(L"JPMCDS")
+    .Documentation(L"Interest rate swap instrument.")
+);
+HANDLEX WINAPI xll_jpmcds_instrument_interest_rate_swap(LONG count, const char* unit, FREQUENCY freq, DAY_COUNT_CONVENTION dcc,
+    ROLL_CONVENTION roll, LONG days)
+{
+#pragma XLLEXPORT
+    handlex h;
+
+    try {
+        if (dcc == 0)
+            dcc = ACT_360;
+        if (roll == 0)
+            roll = ROLL_MODIFIED;
+        if (days == 0)
+            days = 3;
+
+        handle<Instrument::InterestRateSwap> h_(new Instrument::InterestRateSwap(TDateInterval{count, unit[0]}, freq, dcc, roll, days));
+        h = h_.get();
+    }
+    catch (const std::exception& ex) {
+        XLL_ERROR(ex.what());
+    }
+
+    return h;
+}
+AddIn xai_jpmcds_instrument_interest_rate_swap_set(
+    Function(XLL_HANDLE, L"?xll_jpmcds_instrument_interest_rate_swap_set", L"JPMCDS.INSTRUMENT.INTEREST.RATE.SWAP.SET")
+    .Arg(XLL_HANDLE, L"hande", L"is a handle returned by PMCDS.INSTRUMENT.MONEY.MARKET.")
+    .Arg(XLL_DOUBLE, L"rate", L"is the money market rate.")
+    .Arg(XLL_DOUBLE, L"valuation", L"is the valuation date for rate.")
+    .FunctionHelp(L"Return a handle to a money market instrument after setting rate and valuation.")
+    .Category(L"JPMCDS")
+    .Documentation(L"Fix the rate and valuation date.")
+);
+HANDLEX WINAPI xll_jpmcds_instrument_interest_rate_swap_set(HANDLEX h, double rate, double val)
+{
+#pragma XLLEXPORT
+    try {
+        handle<Instrument::InterestRateSwap> h_(h);
+        ensure(h_);
+        h_->set(rate, (TDate)val);
+    }
+    catch (const std::exception& ex) {
+        XLL_ERROR(ex.what());
+    }
+
+    return h;
+}
+
 AddIn xai_jpmcds_tcurve(
     Function(XLL_HANDLE, L"?xll_jpmcds_tcurve", L"JPMCDS.TCURVE")
     .Arg(XLL_LONG, L"baseDate", L"is the base date of the curve.")
@@ -215,72 +275,58 @@ HANDLEX WINAPI xll_jpmcds_build_ir_zero_curve(double valueDate, const _FP12* cas
         Jpmcds::Curve curve((TDate)valueDate, 0, ANNUAL_BASIS, ACT_365F);
 
         int nCash = size(*cashs);
-        std::vector<TDate> cashDates(nCash);
-        std::vector<double> cashRates(nCash);
-        DAY_COUNT_CONVENTION mmDCC = ACT_360;
-        for (int i = 0; i < nCash; ++i) {
-            handle<Instrument::MoneyMarket> hi(cashs->array[i]);
-            ensure (hi);
-            if (i == 0)
-                mmDCC = hi->dcc;
-            else
-                ensure (mmDCC == hi->dcc);
-            cashDates[i] = hi->maturity();
-            cashRates[i] = hi->rate;
+        if (!(nCash == 1 && cashs->array[0] == 0)) {
+            std::vector<TDate> cashDates(nCash);
+            std::vector<double> cashRates(nCash);
+            DAY_COUNT_CONVENTION mmDCC = ACT_360;
+            for (int i = 0; i < nCash; ++i) {
+                handle<Instrument::MoneyMarket> hi(cashs->array[i]);
+                ensure (hi);
+                if (i == 0)
+                    mmDCC = hi->dcc;
+                else
+                    ensure (mmDCC == hi->dcc);
+                cashDates[i] = hi->maturity();
+                cashRates[i] = hi->rate;
+            }
+            curve = Curve(JpmcdsZCCash(curve, &cashDates[0], &cashRates[0], nCash, mmDCC));
         }
-        curve = Curve(JpmcdsZCCash(curve, &cashDates[0], &cashRates[0], nCash, mmDCC));
 
         int nSwap = size(*swaps);
-        std::vector<TDate> swapDates(nSwap);
-        std::vector<double> swapRates(nSwap);
-        FREQUENCY fixedFreq = FREQ_SEMIANNUAL, floatFreq = FREQ_QUARTERLY;
-        DAY_COUNT_CONVENTION fixedDCC = B30E_360, floatDCC = B30E_360;
-        ROLL_CONVENTION rollConv = ROLL_FOLLOW;
-        char* holidays = const_cast<char*>("NONE");
-        for (int i = 0; i < nSwap; ++i) {
-            handle<Instrument::InterestRateSwap> hi(swaps->array[i]);
-            ensure (hi);
-            if (i == 0) {
-                fixedFreq = hi->fixedLeg.freq;
-                floatFreq = hi->floatLeg.freq;
-                fixedDCC = hi->fixedLeg.dcc;
-                floatDCC = hi->floatLeg.dcc;
-                rollConv = hi->fixedLeg.roll;
-                ensure (rollConv == hi->floatLeg.roll);
+        if (!(nSwap == 1 && swaps->array[0] == 0)) {
+            std::vector<TDate> swapDates(nSwap);
+            std::vector<double> swapRates(nSwap);
+            FREQUENCY fixedFreq = FREQ_SEMIANNUAL, floatFreq = FREQ_QUARTERLY;
+            DAY_COUNT_CONVENTION fixedDCC = B30E_360, floatDCC = B30E_360;
+            ROLL_CONVENTION rollConv = ROLL_FOLLOW;
+            char* holidays = const_cast<char*>("NONE");
+            for (int i = 0; i < nSwap; ++i) {
+                handle<Instrument::InterestRateSwap> hi(swaps->array[i]);
+                ensure (hi);
+                if (i == 0) {
+                    fixedFreq = hi->fixedLeg.freq;
+                    floatFreq = hi->floatLeg.freq;
+                    fixedDCC = hi->fixedLeg.dcc;
+                    floatDCC = hi->floatLeg.dcc;
+                    rollConv = hi->fixedLeg.roll;
+                    ensure (rollConv == hi->floatLeg.roll);
+                }
+                else {
+                    ensure(fixedFreq == hi->fixedLeg.freq);
+                    ensure(floatFreq == hi->floatLeg.freq);
+                    ensure(fixedDCC == hi->fixedLeg.dcc);
+                    ensure(floatDCC == hi->floatLeg.dcc);
+                    ensure(rollConv == hi->fixedLeg.roll);
+                    ensure(rollConv == hi->floatLeg.roll);
+                }
+                swapDates[i] = hi->fixedLeg.maturity((TDate)valueDate);
+                swapRates[i] = hi->fixedLeg.rate;
             }
-            else {
-                ensure(fixedFreq == hi->fixedLeg.freq);
-                ensure(floatFreq == hi->floatLeg.freq);
-                ensure(fixedDCC == hi->fixedLeg.dcc);
-                ensure(floatDCC == hi->floatLeg.dcc);
-                ensure(rollConv == hi->fixedLeg.roll);
-                ensure(rollConv == hi->floatLeg.roll);
-            }
-            swapDates[i] = hi->fixedLeg.maturity();
-            swapRates[i] = hi->fixedLeg.rate;
+            curve = Curve(JpmcdsZCSwaps(curve, NULL, &swapDates[0], &swapRates[0], nSwap, 
+                fixedFreq, floatFreq, fixedDCC, floatDCC, 0, rollConv, holidays));
         }
-        curve = Curve(JpmcdsZCSwaps(curve, NULL, &swapDates[0], &swapRates[0], nSwap, 
-            fixedFreq, floatFreq, fixedDCC, floatDCC, 0, rollConv, holidays));
-         /*   
-        zcurveSwap = JpmcdsZCSwaps(zcurveCash,
-                            NULL,   // discZC 
-                            swapDates,
-                            swapRates,
-                            nSwap,
-                            fixedSwapFreq,
-                            floatSwapFreq,
-                            fixedSwapDCC,
-                            floatSwapDCC,
-                            fwdLength,
-                            badDayConv,
-                            holidayFile);
-
-            JpmcdsZCAddSwaps
-            
-        }
-        */
         handle<Curve> h_(new Curve(curve));
-        curve.~Curve(); //??? can we move it ???
+        //curve.~Curve(); //??? can we move it ???
         h = h_.get();
     }
     catch (const std::exception& ex) {

@@ -112,7 +112,7 @@ namespace Jpmcds {
             ROLL_CONVENTION roll;
             int days; // T + days settlement
             double rate; // par coupon
-            InterestRateFixedLeg(TDateInterval tenor, FREQUENCY freq, DAY_COUNT_CONVENTION dcc, ROLL_CONVENTION roll, int days)
+            InterestRateFixedLeg(TDateInterval tenor, FREQUENCY freq = FREQ_SEMIANNUAL, DAY_COUNT_CONVENTION dcc = ACT_360, ROLL_CONVENTION roll = ROLL_MODIFIED, int days = 2)
                 : tenor(tenor), freq(freq), dcc(dcc), roll(roll), days(days)
             { }
             InterestRateFixedLeg(const InterestRateFixedLeg&) = default;
@@ -120,9 +120,28 @@ namespace Jpmcds {
             ~InterestRateFixedLeg()
             { }
             // Set par coupon and cash flow dates.
-            InterestRateFixedLeg& set(TDate valuation, double rate)
+            InterestRateFixedLeg& set(TDate valuation, double rate_)
             {
+                rate = rate_;
+                valuation = valuation;
+                // !!! add dates and cash flows here !!!
+                
                 return *this;
+            }
+            TDate maturity(TDate valuation) const
+            {
+                TDate set, mat;
+                TDateAdjIntvl ai;
+
+                ai.interval = TDateInterval{days, 'D'};
+                ai.isBusDays = JPMCDS_DATE_ADJ_TYPE_BUSINESS;
+                ai.badDayConv = roll;
+                ai.holidayFile = const_cast<char*>("NONE");
+                JpmcdsDtFwdAdj(valuation, &ai, &set);
+                ai.interval = tenor;
+                JpmcdsDtFwdAdj(set, &ai, &mat);
+
+                return mat;
             }
         };
 
@@ -132,11 +151,39 @@ namespace Jpmcds {
             DAY_COUNT_CONVENTION dcc;
             ROLL_CONVENTION roll;
             int days; // T + days settlement
+            InterestRateFloatLeg(TDateInterval tenor, FREQUENCY freq = FREQ_QUARTERLY, DAY_COUNT_CONVENTION dcc = ACT_360, ROLL_CONVENTION roll = ROLL_MODIFIED, int days = 2)
+                : tenor(tenor), freq(freq), dcc(dcc), roll(roll), days(days)
+            { }
         };
 
         struct InterestRateSwap {
             InterestRateFixedLeg fixedLeg;
             InterestRateFloatLeg floatLeg;
+            InterestRateSwap(TDateInterval tenor, FREQUENCY freq = FREQ_QUARTERLY, DAY_COUNT_CONVENTION dcc = ACT_360, ROLL_CONVENTION roll = ROLL_MODIFIED, int days = 2)
+                : fixedLeg(tenor, freq, dcc, roll, days), floatLeg(tenor, freq, dcc, roll, days)
+            { }
+            InterestRateSwap& set(double rate_, TDate valuation)
+            {
+                fixedLeg.rate = rate_;
+                valuation = valuation;
+
+                return *this;
+            }
+            TDate maturity(TDate valuation) const
+            {
+                return fixedLeg.maturity(valuation);
+            }
+        };
+
+        struct CreditDefaultSwap {
+            FREQUENCY freq;
+            DAY_COUNT_CONVENTION dcc;
+            ROLL_CONVENTION roll;
+            TDate stepin, start, end;
+            double rate; // coupon
+            TBoolean payAccOnDefault;
+            TDateInterval ivl;
+            TStubMethod stub;
         };
 
     } // namespace Instrument
@@ -184,22 +231,26 @@ namespace Jpmcds {
         // Calculate discount factor for specified date and zero curve.
         double DiscountDate(TDate date, long interpType = JPMCDS_FLAT_FORWARDS)
         {
-            double D;
+            double D = std::numeric_limits<double>::quiet_NaN();
 
-            int rc = JpmcdsDiscountDate(date, p, interpType, &D);
-            if (rc != SUCCESS)
-                D = std::numeric_limits<double>::quiet_NaN();
-
+            if (p) {
+                int rc = JpmcdsDiscountDate(date, p, interpType, &D);
+                if (rc != SUCCESS)
+                    D = std::numeric_limits<double>::quiet_NaN();
+            }
+            
             return D;
         }
         // Interpolates a TCurve at a TDate using the specified interp method. 
         double InterpRate(TDate date, long interpType = JPMCDS_FLAT_FORWARDS)
         {
-            double r;
+            double r = std::numeric_limits<double>::quiet_NaN();
 
-            int rc = JpmcdsInterpRate(date, p, interpType, &r);
-            if (rc != SUCCESS)
-                r = std::numeric_limits<double>::quiet_NaN();
+            if (p) {
+                int rc = JpmcdsInterpRate(date, p, interpType, &r);
+                if (rc != SUCCESS)
+                    r = std::numeric_limits<double>::quiet_NaN();
+            }
 
             return r;
         }
