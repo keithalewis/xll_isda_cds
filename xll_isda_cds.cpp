@@ -94,7 +94,8 @@ HANDLEX WINAPI xll_jpmcds_instrument_money_market_set(HANDLEX h, double rate, do
 
     return h;
 }
-// MONEY.MARKET.CASH.FLOWS
+// MONEY.MARKET.DATE
+// MONEY.MARKET.CASH
 
 AddIn xai_jpmcds_tcurve(
     Function(XLL_HANDLE, L"?xll_jpmcds_tcurve", L"JPMCDS.TCURVE")

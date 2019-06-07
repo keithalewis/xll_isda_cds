@@ -90,11 +90,11 @@ namespace Jpmcds {
             }
             const TDate* date() const
             {
-                return &date_[0];
+                return date_;
             }
             const double* cash() const
             {
-                return &cash_[0];
+                return cash_;
             }
         };
 
@@ -122,6 +122,7 @@ namespace Jpmcds {
 
     } // namespace Instrument
 
+    // Make ISDA TCurve into a proper value type.
     class Curve {
         ::TCurve* p;
     public:
