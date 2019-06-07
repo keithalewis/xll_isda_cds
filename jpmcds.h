@@ -181,16 +181,10 @@ namespace Jpmcds {
                 return fixedLeg.maturity(valuation);
             }
         };
-
+#include "cx.h"
         struct CreditDefaultSwap {
-            FREQUENCY freq;
-            DAY_COUNT_CONVENTION dcc;
-            ROLL_CONVENTION roll;
-            TDate stepin, start, end;
-            double rate; // coupon
-            TBoolean payAccOnDefault;
-            TDateInterval ivl;
-            TStubMethod stub;
+            TContingentLeg contingentLeg; // protection leg
+            TFeeLeg feeLeg;
         };
 
     } // namespace Instrument
