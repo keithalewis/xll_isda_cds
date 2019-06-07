@@ -118,6 +118,8 @@ HANDLEX WINAPI xll_jpmcds_instrument_interest_rate_swap(LONG count, const char* 
     handlex h;
 
     try {
+        if (freq == 0)
+            freq = FREQ_SEMIANNUAL;
         if (dcc == 0)
             dcc = ACT_360;
         if (roll == 0)
