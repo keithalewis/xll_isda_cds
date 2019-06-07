@@ -71,15 +71,22 @@ namespace Jpmcds {
             // Set rate and cash flow dates.
             MoneyMarket& set(double rate_, TDate valuation_)
             {
+                static char* holiday = const_cast<char*>("NONE"); // only weekends
                 rate = rate_;
-                TDateAdjIntvl ai;
-                ai.interval = TDateInterval{days,'D'};
-                ai.isBusDays = JPMCDS_DATE_ADJ_TYPE_BUSINESS;
-                ai.badDayConv = roll;
-                ai.holidayFile = const_cast<char*>("NONE");
-                JpmcdsDtFwdAdj(valuation_, &ai, date_ + 0);
-                ai.interval = tenor;
-                JpmcdsDtFwdAdj(date_[0], &ai, date_ + 1);
+
+                TDateAdjIntvl dai;
+                dai.badDayConv = roll;
+                dai.holidayFile = holiday;
+                dai.interval = TDateInterval{days, 'D'};
+                dai.isBusDays = TRUE;
+               
+                // first date
+                JpmcdsDtFwdAdj(valuation_, &dai, date_ + 0);
+
+                // second date
+                dai.interval = tenor;
+                JpmcdsDtFwdAdj(date_[0], &dai, date_ + 1);
+
                 cash_[0] = -1;
                 double dcf;
                 JpmcdsDayCountFraction(date_[0],date_[1], dcc, &dcf);

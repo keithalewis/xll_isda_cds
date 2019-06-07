@@ -5,6 +5,16 @@
 using namespace Jpmcds;
 using namespace xll;
 
+// Date stupidity
+inline TDate excel2TDate(double date)
+{
+    return (TDate)date + 109205;
+}
+inline double TDate2excel(TDate date)
+{
+    return date - 109205;
+}
+
 AddIn xai_isda_cds(
     Documentation(L"The JP Morgan ISDA CDS model.")
 );
@@ -87,7 +97,7 @@ HANDLEX WINAPI xll_jpmcds_instrument_money_market_set(HANDLEX h, double rate, do
     try {
         handle<Instrument::MoneyMarket> h_(h);
         ensure (h_);
-        h_->set(rate, (TDate)val);
+        h_->set(rate, excel2TDate(val));
     }
     catch (const std::exception& ex) {
         XLL_ERROR(ex.what());
@@ -96,6 +106,34 @@ HANDLEX WINAPI xll_jpmcds_instrument_money_market_set(HANDLEX h, double rate, do
     return h;
 }
 // MONEY.MARKET.CASH.FLOWS
+AddIn xai_jpmcds_instrument_money_market_flows(
+    Function(XLL_FP, L"?xll_jpmcds_instrument_money_market_flows", L"JPMCDS.INSTRUMENT.MONEY.MARKET.FLOWS")
+    .Arg(XLL_HANDLE, L"hande", L"is a handle returned by JPMCDS.INSTRUMENT.MONEY.MARKET.")
+    .FunctionHelp(L"Return an array with first row cash flow dates and second row cash flow amounts.")
+    .Category(L"JPMCDS")
+    .Documentation(L"Return dates and amounts associated with the money market instrument.")
+);
+_FP12* WINAPI xll_jpmcds_instrument_money_market_flows(HANDLEX h)
+{
+#pragma XLLEXPORT
+    static xll::FP12 dc(2,2);
+
+    try {
+        handle<Instrument::MoneyMarket> h_(h);
+        ensure(h_.ptr());
+        const auto& d = h_->date();
+        dc(0,0) = TDate2excel(d[0]); dc(0,1) = TDate2excel(d[1]);
+        const auto& c = h_->cash();
+        dc(1,0) = c[0]; dc(1,1) = c[1];
+    }
+    catch (const std::exception& ex) {
+        XLL_ERROR(ex.what());
+
+        return 0;
+    }
+
+    return dc.get();
+}
 
 AddIn xai_jpmcds_instrument_interest_rate_swap(
     Function(XLL_HANDLE, L"?xll_jpmcds_instrument_interest_rate_swap", L"JPMCDS.INSTRUMENT.INTEREST.RATE.SWAP")
@@ -242,7 +280,7 @@ double WINAPI xll_jpmcds_tcurve_rate(HANDLEX h, double date, INTERPOLATION_TYPE 
             type = INTERPOLATION_TYPE::FLAT_FORWARDS;
 
         handle<Jpmcds::Curve> h_(h);
-        ensure(h_);
+        ensure(h_.ptr() || !__FUNCTION__ ": failed to lookup curve handle.");
 
         r = h_->InterpRate(static_cast<TDate>(date), type);
     }
