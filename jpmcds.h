@@ -140,10 +140,10 @@ namespace Jpmcds {
                 TDate set, mat;
                 TDateAdjIntvl ai;
 
-                ai.interval = TDateInterval{days, 'D'};
-                ai.isBusDays = JPMCDS_DATE_ADJ_TYPE_BUSINESS;
                 ai.badDayConv = roll;
                 ai.holidayFile = const_cast<char*>("NONE");
+                ai.interval = TDateInterval{days, 'D'};
+                ai.isBusDays = TRUE;
                 JpmcdsDtFwdAdj(valuation, &ai, &set);
                 ai.interval = tenor;
                 JpmcdsDtFwdAdj(set, &ai, &mat);

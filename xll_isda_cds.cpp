@@ -96,7 +96,7 @@ HANDLEX WINAPI xll_jpmcds_instrument_money_market_set(HANDLEX h, double rate, do
 #pragma XLLEXPORT
     try {
         handle<Instrument::MoneyMarket> h_(h);
-        ensure (h_);
+        ensure (h_.ptr());
         h_->set(rate, excel2TDate(val));
     }
     catch (const std::exception& ex) {
@@ -155,6 +155,8 @@ HANDLEX WINAPI xll_jpmcds_instrument_interest_rate_swap(LONG count, const char* 
     handlex h;
 
     try {
+        if (freq == 0)
+            freq = FREQ_SEMIANNUAL;
         if (dcc == 0)
             dcc = ACT_360;
         if (roll == 0)
@@ -185,8 +187,8 @@ HANDLEX WINAPI xll_jpmcds_instrument_interest_rate_swap_set(HANDLEX h, double ra
 #pragma XLLEXPORT
     try {
         handle<Instrument::InterestRateSwap> h_(h);
-        ensure(h_);
-        h_->set(rate, (TDate)val);
+        ensure(h_.ptr());
+        h_->set(rate, excel2TDate(val));
     }
     catch (const std::exception& ex) {
         XLL_ERROR(ex.what());
@@ -197,7 +199,7 @@ HANDLEX WINAPI xll_jpmcds_instrument_interest_rate_swap_set(HANDLEX h, double ra
 
 AddIn xai_jpmcds_tcurve(
     Function(XLL_HANDLE, L"?xll_jpmcds_tcurve", L"JPMCDS.TCURVE")
-    .Arg(XLL_LONG, L"baseDate", L"is the base date of the curve.")
+    .Arg(XLL_DOUBLE, L"baseDate", L"is the base date of the curve.")
     .Arg(XLL_FP, L"dates", L"is an array of curve dates.")
     .Arg(XLL_FP, L"rates", L"is an array of curve rates.")
     .Arg(XLL_LONG, L"basis", L"is the rate basis from the RATE_* enumeration.")
@@ -207,7 +209,7 @@ AddIn xai_jpmcds_tcurve(
     .Category(L"JPMCDS")
     .Documentation(L"Create a curve from dates and rates.")
 );
-HANDLEX WINAPI xll_jpmcds_tcurve(LONG base, _FP12* dates, _FP12* rates, RATE_BASIS basis, DAY_COUNT_CONVENTION dcc)
+HANDLEX WINAPI xll_jpmcds_tcurve(double base, _FP12* dates, _FP12* rates, RATE_BASIS basis, DAY_COUNT_CONVENTION dcc)
 {
 #pragma XLLEXPORT
     handlex h;
@@ -217,8 +219,8 @@ HANDLEX WINAPI xll_jpmcds_tcurve(LONG base, _FP12* dates, _FP12* rates, RATE_BAS
         
         int n = size(*dates);
         std::vector<LONG> d(n);
-        std::transform(dates->array, dates->array + n, &d[0], [](double x) { return (LONG)x; });
-        handle<Jpmcds::Curve> h_(new Jpmcds::Curve(base, &d[0], rates->array, n, basis, dcc));
+        std::transform(dates->array, dates->array + n, &d[0], [](double x) { return excel2TDate(x); });
+        handle<Jpmcds::Curve> h_(new Jpmcds::Curve(excel2TDate(base), &d[0], rates->array, n, basis, dcc));
         
         h = h_.get();
     }
@@ -249,9 +251,9 @@ double WINAPI xll_jpmcds_tcurve_discount(HANDLEX h, double date, INTERPOLATION_T
             type = INTERPOLATION_TYPE::FLAT_FORWARDS;
 
         handle<Jpmcds::Curve> h_(h);
-        ensure (h_);
+        ensure (h_.get());
 
-        D = h_->DiscountDate(static_cast<TDate>(date), type);
+        D = h_->DiscountDate(excel2TDate(date), type);
     }
     catch (const std::exception& ex) {
         XLL_ERROR(ex.what());
@@ -280,9 +282,9 @@ double WINAPI xll_jpmcds_tcurve_rate(HANDLEX h, double date, INTERPOLATION_TYPE 
             type = INTERPOLATION_TYPE::FLAT_FORWARDS;
 
         handle<Jpmcds::Curve> h_(h);
-        ensure(h_.ptr() || !__FUNCTION__ ": failed to lookup curve handle.");
+        ensure(h_.ptr()); // || !__FUNCTION__ ": failed to lookup curve handle.");
 
-        r = h_->InterpRate(static_cast<TDate>(date), type);
+        r = h_->InterpRate(excel2TDate(date), type);
     }
     catch (const std::exception& ex) {
         XLL_ERROR(ex.what());
@@ -310,7 +312,7 @@ HANDLEX WINAPI xll_jpmcds_build_ir_zero_curve(double valueDate, const _FP12* cas
     handlex h;
 
     try {
-        Jpmcds::Curve curve((TDate)valueDate, 0, ANNUAL_BASIS, ACT_365F);
+        Jpmcds::Curve curve(excel2TDate(valueDate), 0, ANNUAL_BASIS, ACT_365F);
 
         int nCash = size(*cashs);
         if (!(nCash == 1 && cashs->array[0] == 0)) {
@@ -357,7 +359,7 @@ HANDLEX WINAPI xll_jpmcds_build_ir_zero_curve(double valueDate, const _FP12* cas
                     ensure(rollConv == hi->fixedLeg.roll);
                     ensure(rollConv == hi->floatLeg.roll);
                 }
-                swapDates[i] = hi->fixedLeg.maturity((TDate)valueDate);
+                swapDates[i] = hi->fixedLeg.maturity(excel2TDate(valueDate));
                 swapRates[i] = hi->fixedLeg.rate;
             }
             curve = Curve(JpmcdsZCSwaps(curve, NULL, &swapDates[0], &swapRates[0], nSwap, 
