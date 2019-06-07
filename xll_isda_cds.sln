@@ -7,7 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xll_isda_cds", "xll_isda_cd
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xll12", "xll12\xll12.vcxproj", "{3563C165-8A72-4BE5-B8AF-FD5904C9030E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "isda_cds_model", "isda_cds_model.vcxproj", "{9DC7948A-2324-42A1-920B-66E39CC4321A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "isda_cds_model", "isda_cds_model_c_v1.8.2\isda_cds_model.vcxproj", "{9DC7948A-2324-42A1-920B-66E39CC4321A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

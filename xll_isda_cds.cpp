@@ -42,12 +42,12 @@ AddIn xai_jpmcds_instrument_money_market(
     .Arg(XLL_LONG, L"count", L"is the number of units in the tenor.")
     .Arg(XLL_CSTRING4, L"unit", L"is the unit corresponding ot count.")
     .Arg(XLL_LONG, L"dcc", L"is the day count convention. Default is Actual/360")
-    .Arg(XLL_LONG, L"roll", L"is the rolling convention for payment dates. Default is following.")
-    .Arg(XLL_LONG, L"days", L"is the number of days it takes to settle. Default is 1.")
+    .Arg(XLL_LONG, L"roll", L"is the rolling convention for payment dates. Default is following business day.")
+    .Arg(XLL_LONG, L"days", L"is the number of days it takes to settle. Default is 3.")
     .Uncalced()
     .FunctionHelp(L"Return a handle to a money market instrument.")
     .Category(L"JPMCDS")
-    .Documentation(L"")
+    .Documentation(L"Short term instrument.")
 );
 HANDLEX WINAPI xll_jpmcds_instrument_money_market(LONG count, const char* unit, DAY_COUNT_CONVENTION dcc, 
     ROLL_CONVENTION roll, LONG days)
@@ -57,11 +57,11 @@ HANDLEX WINAPI xll_jpmcds_instrument_money_market(LONG count, const char* unit, 
 
     try {
         if (dcc == 0)
-            dcc = ACT_365F;
+            dcc = ACT_360;
         if (roll == 0)
             roll = ROLL_FOLLOW;
         if (days == 0)
-            days = 1;
+            days = 3;
 
         handle<Instrument::MoneyMarket> h_(new Instrument::MoneyMarket(TDateInterval{count, unit[0]}, dcc, roll, days));
         h = h_.get();
@@ -74,11 +74,12 @@ HANDLEX WINAPI xll_jpmcds_instrument_money_market(LONG count, const char* unit, 
 }
 AddIn xai_jpmcds_instrument_money_market_set(
     Function(XLL_HANDLE, L"?xll_jpmcds_instrument_money_market_set", L"JPMCDS.INSTRUMENT.MONEY.MARKET.SET")
+    .Arg(XLL_HANDLE, L"hande", L"is a handle returned by PMCDS.INSTRUMENT.MONEY.MARKET.")
     .Arg(XLL_DOUBLE, L"rate", L"is the money market rate.")
     .Arg(XLL_DOUBLE, L"valuation", L"is the valuation date for rate.")
     .FunctionHelp(L"Return a handle to a money market instrument after setting rate and valuation.")
     .Category(L"JPMCDS")
-    .Documentation(L"")
+    .Documentation(L"Fix the rate and valuation date.")
 );
 HANDLEX WINAPI xll_jpmcds_instrument_money_market_set(HANDLEX h, double rate, double val)
 {
@@ -97,6 +98,66 @@ HANDLEX WINAPI xll_jpmcds_instrument_money_market_set(HANDLEX h, double rate, do
 // MONEY.MARKET.DATE
 // MONEY.MARKET.CASH
 
+AddIn xai_jpmcds_instrument_interest_rate_swap(
+    Function(XLL_HANDLE, L"?xll_jpmcds_instrument_interest_rate_swap", L"JPMCDS.INSTRUMENT.INTEREST.RATE.SWAP")
+    .Arg(XLL_LONG, L"count", L"is the number of units in the tenor.")
+    .Arg(XLL_CSTRING4, L"unit", L"is the unit corresponding ot count.")
+    .Arg(XLL_LONG, L"freq", L"is the payment frequency from the FREQ_* enumeration.")
+    .Arg(XLL_LONG, L"dcc", L"is the day count convention. Default is Actual/360")
+    .Arg(XLL_LONG, L"roll", L"is the rolling convention for payment dates. Default is modified following business day.")
+    .Arg(XLL_LONG, L"days", L"is the number of days it takes to settle. Default is 3.")
+    .Uncalced()
+    .FunctionHelp(L"Return a handle to a swap instrument.")
+    .Category(L"JPMCDS")
+    .Documentation(L"Interest rate swap instrument.")
+);
+HANDLEX WINAPI xll_jpmcds_instrument_interest_rate_swap(LONG count, const char* unit, FREQUENCY freq, DAY_COUNT_CONVENTION dcc,
+    ROLL_CONVENTION roll, LONG days)
+{
+#pragma XLLEXPORT
+    handlex h;
+
+    try {
+        if (dcc == 0)
+            dcc = ACT_360;
+        if (roll == 0)
+            roll = ROLL_MODIFIED;
+        if (days == 0)
+            days = 3;
+
+        handle<Instrument::InterestRateSwap> h_(new Instrument::InterestRateSwap(TDateInterval{count, unit[0]}, freq, dcc, roll, days));
+        h = h_.get();
+    }
+    catch (const std::exception& ex) {
+        XLL_ERROR(ex.what());
+    }
+
+    return h;
+}
+AddIn xai_jpmcds_instrument_interest_rate_swap_set(
+    Function(XLL_HANDLE, L"?xll_jpmcds_instrument_interest_rate_swap_set", L"JPMCDS.INSTRUMENT.INTEREST.RATE.SWAP.SET")
+    .Arg(XLL_HANDLE, L"hande", L"is a handle returned by PMCDS.INSTRUMENT.MONEY.MARKET.")
+    .Arg(XLL_DOUBLE, L"rate", L"is the money market rate.")
+    .Arg(XLL_DOUBLE, L"valuation", L"is the valuation date for rate.")
+    .FunctionHelp(L"Return a handle to a money market instrument after setting rate and valuation.")
+    .Category(L"JPMCDS")
+    .Documentation(L"Fix the rate and valuation date.")
+);
+HANDLEX WINAPI xll_jpmcds_instrument_interest_rate_swap_set(HANDLEX h, double rate, double val)
+{
+#pragma XLLEXPORT
+    try {
+        handle<Instrument::InterestRateSwap> h_(h);
+        ensure(h_);
+        h_->set(rate, (TDate)val);
+    }
+    catch (const std::exception& ex) {
+        XLL_ERROR(ex.what());
+    }
+
+    return h;
+}
+
 AddIn xai_jpmcds_tcurve(
     Function(XLL_HANDLE, L"?xll_jpmcds_tcurve", L"JPMCDS.TCURVE")
     .Arg(XLL_LONG, L"baseDate", L"is the base date of the curve.")
@@ -107,7 +168,7 @@ AddIn xai_jpmcds_tcurve(
     .Uncalced()
     .FunctionHelp(L"Return a handle to a rate curve.")
     .Category(L"JPMCDS")
-    .Documentation(L"")
+    .Documentation(L"Create a curve from dates and rates.")
 );
 HANDLEX WINAPI xll_jpmcds_tcurve(LONG base, _FP12* dates, _FP12* rates, RATE_BASIS basis, DAY_COUNT_CONVENTION dcc)
 {
@@ -139,7 +200,7 @@ AddIn xai_jpmcds_tcurve_discount(
         L"Default is INTERPOLATION_TYPE_FLAT_FORWARDS.")
     .FunctionHelp(L"Return the discount to a date.")
     .Category(L"JPMCDS")
-    .Documentation(L"")
+    .Documentation(L"Return the discount.")
 );
 double WINAPI xll_jpmcds_tcurve_discount(HANDLEX h, double date, INTERPOLATION_TYPE type)
 {
@@ -162,51 +223,112 @@ double WINAPI xll_jpmcds_tcurve_discount(HANDLEX h, double date, INTERPOLATION_T
     return D;
 }
 
+AddIn xai_jpmcds_tcurve_rate(
+    Function(XLL_DOUBLE, L"?xll_jpmcds_tcurve_rate", L"JPMCDS.TCURVE.RATE")
+    .Arg(XLL_HANDLE, L"handle", L"is a handle returned by JPMCDS.TCURVE.")
+    .Arg(XLL_DOUBLE, L"date", L"is the date at which to calulate the rate.")
+    .Arg(XLL_LONG, L"interpType", L"is the type of interpolation to use from the INTERPOLATION_TYPE_* enumeration. "
+        L"Default is INTERPOLATION_TYPE_FLAT_FORWARDS.")
+    .FunctionHelp(L"Return the rate to a date.")
+    .Category(L"JPMCDS")
+    .Documentation(L"Return the rate.")
+);
+double WINAPI xll_jpmcds_tcurve_rate(HANDLEX h, double date, INTERPOLATION_TYPE type)
+{
+#pragma XLLEXPORT
+    double r = std::numeric_limits<double>::quiet_NaN();
+
+    try {
+        if (!type)
+            type = INTERPOLATION_TYPE::FLAT_FORWARDS;
+
+        handle<Jpmcds::Curve> h_(h);
+        ensure(h_);
+
+        r = h_->InterpRate(static_cast<TDate>(date), type);
+    }
+    catch (const std::exception& ex) {
+        XLL_ERROR(ex.what());
+    }
+
+    return r;
+}
+
+#include "gtozc.h"
 #include "zerocurve.h"
-/*
+
 AddIn xai_jpmcds_build_ir_zero_curve(
     Function(XLL_HANDLE, L"?xll_jpmcds_build_ir_zero_curve", L"JPMCDS.BUILD.IR.ZERO.CURVE")
     .Arg(XLL_DOUBLE, L"valueDate", L"is the date the data are valid.")
-    .Arg(XLL_LPOPER, L"type", L"is an array of 'M' (money market) and 'S' (swap) indicators.")
-    .Arg(XLL_FP, L"dates", L"is an array of maturity dates of the instruments.")
-    .Arg(XLL_FP, L"rates", L"is an array of rates for each instrument.")
-    .Arg(XLL_LONG, L"mmDCC", L"is the day count convention for money market instruments. Default is ...")
-    .Arg(XLL_LONG, L"fixedFreq", L"is the payment frequency of the fixed swap legs.")
-    .Arg(XLL_LONG, L"floatFreq", L"is the payment frequency of the float swap legs.")
-    .Arg(XLL_LONG, L"fixedDCC", L"is the day count convention for swap fixed legs. Default is ...")
-    .Arg(XLL_LONG, L"floatDCC", L"is the day count convention for swap float legs. Default is ...")
-    .Arg(XLL_LONG, L"dayConv", L"is the business day rolling convention.")
+    .Arg(XLL_FP, L"cashs", L"is an array of money market cash deposits.")
+    .Arg(XLL_FP, L"swaps", L"is an array of swaps.")
+    .Uncalced()
     .FunctionHelp(L"Return handle to zero curve.")
     .Category(L"JPMCDS")
-    .Documentation(L"")
+    .Documentation(L"Create a curve from money market instruments and swaps.")
 );
-HANDLEX WINAPI xll_jpmcds_build_ir_zero_curve(double valueDate, LPOPER type, _FP12* dates, _FP12* rates,
-    DAY_COUNT_CONVENTION mmdcc, FREQUENCY fixedFreq, FREQUENCY floatFreq,
-    DAY_COUNT_CONVENTION fixedDCC, DAY_COUNT_CONVENTION floatDCC, DAY_COUNT_CONVENTION dayConv)
+HANDLEX WINAPI xll_jpmcds_build_ir_zero_curve(double valueDate, const _FP12* cashs, const _FP12* swaps)
 {
 #pragma XLLEXPORT
     handlex h;
 
     try {
-        TCurve* p = JpmcdsBuildIRZeroCurve(); calls...
-        {
-        zcurveIni = JpmcdsNewTCurve(valueDate, 0, (double) 1L, JPMCDS_ACT_365F);
-        zcurveCash = JpmcdsZCCash(zcurveIni, cashDates, cashRates, nCash, mmDCC);
-        zcurveSwap = JpmcdsZCSwaps(zcurveCash,
-                            NULL,   // discZC 
-                            swapDates,
-                            swapRates,
-                            nSwap,
-                            fixedSwapFreq,
-                            floatSwapFreq,
-                            fixedSwapDCC,
-                            floatSwapDCC,
-                            fwdLength,
-                            badDayConv,
-                            holidayFile);
+        Jpmcds::Curve curve((TDate)valueDate, 0, ANNUAL_BASIS, ACT_365F);
 
-            JpmcdsZCAddSwaps
+        int nCash = size(*cashs);
+        if (!(nCash == 1 && cashs->array[0] == 0)) {
+            std::vector<TDate> cashDates(nCash);
+            std::vector<double> cashRates(nCash);
+            DAY_COUNT_CONVENTION mmDCC = ACT_360;
+            for (int i = 0; i < nCash; ++i) {
+                handle<Instrument::MoneyMarket> hi(cashs->array[i]);
+                ensure (hi);
+                if (i == 0)
+                    mmDCC = hi->dcc;
+                else
+                    ensure (mmDCC == hi->dcc);
+                cashDates[i] = hi->maturity();
+                cashRates[i] = hi->rate;
+            }
+            curve = Curve(JpmcdsZCCash(curve, &cashDates[0], &cashRates[0], nCash, mmDCC));
         }
+
+        int nSwap = size(*swaps);
+        if (!(nSwap == 1 && swaps->array[0] == 0)) {
+            std::vector<TDate> swapDates(nSwap);
+            std::vector<double> swapRates(nSwap);
+            FREQUENCY fixedFreq = FREQ_SEMIANNUAL, floatFreq = FREQ_QUARTERLY;
+            DAY_COUNT_CONVENTION fixedDCC = B30E_360, floatDCC = B30E_360;
+            ROLL_CONVENTION rollConv = ROLL_FOLLOW;
+            char* holidays = const_cast<char*>("NONE");
+            for (int i = 0; i < nSwap; ++i) {
+                handle<Instrument::InterestRateSwap> hi(swaps->array[i]);
+                ensure (hi);
+                if (i == 0) {
+                    fixedFreq = hi->fixedLeg.freq;
+                    floatFreq = hi->floatLeg.freq;
+                    fixedDCC = hi->fixedLeg.dcc;
+                    floatDCC = hi->floatLeg.dcc;
+                    rollConv = hi->fixedLeg.roll;
+                    ensure (rollConv == hi->floatLeg.roll);
+                }
+                else {
+                    ensure(fixedFreq == hi->fixedLeg.freq);
+                    ensure(floatFreq == hi->floatLeg.freq);
+                    ensure(fixedDCC == hi->fixedLeg.dcc);
+                    ensure(floatDCC == hi->floatLeg.dcc);
+                    ensure(rollConv == hi->fixedLeg.roll);
+                    ensure(rollConv == hi->floatLeg.roll);
+                }
+                swapDates[i] = hi->fixedLeg.maturity((TDate)valueDate);
+                swapRates[i] = hi->fixedLeg.rate;
+            }
+            curve = Curve(JpmcdsZCSwaps(curve, NULL, &swapDates[0], &swapRates[0], nSwap, 
+                fixedFreq, floatFreq, fixedDCC, floatDCC, 0, rollConv, holidays));
+        }
+        handle<Curve> h_(new Curve(curve));
+        //curve.~Curve(); //??? can we move it ???
+        h = h_.get();
     }
     catch (const std::exception& ex) {
         XLL_ERROR(ex.what());
@@ -214,7 +336,7 @@ HANDLEX WINAPI xll_jpmcds_build_ir_zero_curve(double valueDate, LPOPER type, _FP
 
     return h;
 }
-*/
+
     
     
     

@@ -26,5 +26,11 @@
     <ClCompile Include="xll_isda_cds.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="depends.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="NOTES.txt" />
   </ItemGroup>
 </Project>

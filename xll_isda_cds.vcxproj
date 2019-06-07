@@ -99,6 +99,7 @@
       <AdditionalOptions>/J %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -114,6 +115,7 @@
       <AdditionalOptions>/J %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -163,15 +165,19 @@
     <ClInclude Include="xll_isda_cds.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="depends.cpp" />
     <ClCompile Include="xll_isda_cds.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="isda_cds_model.vcxproj">
+    <ProjectReference Include="isda_cds_model_c_v1.8.2\isda_cds_model.vcxproj">
       <Project>{9dc7948a-2324-42a1-920b-66e39cc4321a}</Project>
     </ProjectReference>
     <ProjectReference Include="xll12\xll12.vcxproj">
       <Project>{3563c165-8a72-4be5-b8af-fd5904c9030e}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="NOTES.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

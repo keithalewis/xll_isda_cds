@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lib\include\isda\badday.h" />
+    <ClInclude Include="lib\include\isda\bastypes.h" />
+    <ClInclude Include="lib\include\isda\bsearch.h" />
+    <ClInclude Include="lib\include\isda\buscache.h" />
+    <ClInclude Include="lib\include\isda\busday.h" />
+    <ClInclude Include="lib\include\isda\cashflow.h" />
+    <ClInclude Include="lib\include\isda\cdate.h" />
+    <ClInclude Include="lib\include\isda\cds.h" />
+    <ClInclude Include="lib\include\isda\cdsone.h" />
+    <ClInclude Include="lib\include\isda\cerror.h" />
+    <ClInclude Include="lib\include\isda\cfileio.h" />
+    <ClInclude Include="lib\include\isda\cfinanci.h" />
+    <ClInclude Include="lib\include\isda\cgeneral.h" />
+    <ClInclude Include="lib\include\isda\cheaders.h" />
+    <ClInclude Include="lib\include\isda\cmemory.h" />
+    <ClInclude Include="lib\include\isda\contingentleg.h" />
+    <ClInclude Include="lib\include\isda\convert.h" />
+    <ClInclude Include="lib\include\isda\cx.h" />
+    <ClInclude Include="lib\include\isda\cxbsearch.h" />
+    <ClInclude Include="lib\include\isda\cxdatelist.h" />
+    <ClInclude Include="lib\include\isda\cxzerocurve.h" />
+    <ClInclude Include="lib\include\isda\dateadj.h" />
+    <ClInclude Include="lib\include\isda\dateconv.h" />
+    <ClInclude Include="lib\include\isda\datelist.h" />
+    <ClInclude Include="lib\include\isda\date_sup.h" />
+    <ClInclude Include="lib\include\isda\defaulted.h" />
+    <ClInclude Include="lib\include\isda\dtlist.h" />
+    <ClInclude Include="lib\include\isda\feeleg.h" />
+    <ClInclude Include="lib\include\isda\fltrate.h" />
+    <ClInclude Include="lib\include\isda\gtozc.h" />
+    <ClInclude Include="lib\include\isda\interp.h" />
+    <ClInclude Include="lib\include\isda\ldate.h" />
+    <ClInclude Include="lib\include\isda\lintrp.h" />
+    <ClInclude Include="lib\include\isda\lprintf.h" />
+    <ClInclude Include="lib\include\isda\macros.h" />
+    <ClInclude Include="lib\include\isda\mdydate.h" />
+    <ClInclude Include="lib\include\isda\metric.h" />
+    <ClInclude Include="lib\include\isda\rtbrent.h" />
+    <ClInclude Include="lib\include\isda\schedule.h" />
+    <ClInclude Include="lib\include\isda\streamcf.h" />
+    <ClInclude Include="lib\include\isda\strutil.h" />
+    <ClInclude Include="lib\include\isda\stub.h" />
+    <ClInclude Include="lib\include\isda\tcurve.h" />
+    <ClInclude Include="lib\include\isda\timeline.h" />
+    <ClInclude Include="lib\include\isda\version.h" />
+    <ClInclude Include="lib\include\isda\yearfrac.h" />
+    <ClInclude Include="lib\include\isda\zcprvt.h" />
+    <ClInclude Include="lib\include\isda\zerocurve.h" />
+    <ClInclude Include="lib\include\isda\zr2coup.h" />
+    <ClInclude Include="lib\include\isda\zr2fwd.h" />
+    <ClInclude Include="lib\src\zcswdate.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="lib\src\badday.c" />
+    <ClCompile Include="lib\src\bsearch.c" />
+    <ClCompile Include="lib\src\buscache.c" />
+    <ClCompile Include="lib\src\busday.c" />
+    <ClCompile Include="lib\src\cashflow.c" />
+    <ClCompile Include="lib\src\cds.c" />
+    <ClCompile Include="lib\src\cdsbootstrap.c" />
+    <ClCompile Include="lib\src\cdsone.c" />
+    <ClCompile Include="lib\src\cerror.c" />
+    <ClCompile Include="lib\src\cfileio.c" />
+    <ClCompile Include="lib\src\cfinanci.cpp" />
+    <ClCompile Include="lib\src\cmemory.c" />
+    <ClCompile Include="lib\src\contingentleg.c" />
+    <ClCompile Include="lib\src\convert.c" />
+    <ClCompile Include="lib\src\cx.c" />
+    <ClCompile Include="lib\src\cxbsearch.c" />
+    <ClCompile Include="lib\src\cxdatelist.c" />
+    <ClCompile Include="lib\src\cxzerocurve.c" />
+    <ClCompile Include="lib\src\dateadj.c" />
+    <ClCompile Include="lib\src\dateconv.c" />
+    <ClCompile Include="lib\src\datelist.c" />
+    <ClCompile Include="lib\src\date_sup.c" />
+    <ClCompile Include="lib\src\defaulted.c" />
+    <ClCompile Include="lib\src\dtlist.c" />
+    <ClCompile Include="lib\src\feeleg.c" />
+    <ClCompile Include="lib\src\fltrate.c" />
+    <ClCompile Include="lib\src\gtozc.c" />
+    <ClCompile Include="lib\src\interpc.c" />
+    <ClCompile Include="lib\src\ldate.c" />
+    <ClCompile Include="lib\src\linterpc.c" />
+    <ClCompile Include="lib\src\lintrp1.c" />
+    <ClCompile Include="lib\src\lprintf.c" />
+    <ClCompile Include="lib\src\lscanf.c" />
+    <ClCompile Include="lib\src\rtbrent.c" />
+    <ClCompile Include="lib\src\schedule.c" />
+    <ClCompile Include="lib\src\streamcf.c" />
+    <ClCompile Include="lib\src\strutil.c" />
+    <ClCompile Include="lib\src\stub.c" />
+    <ClCompile Include="lib\src\tcurve.c" />
+    <ClCompile Include="lib\src\timeline.c" />
+    <ClCompile Include="lib\src\version.c" />
+    <ClCompile Include="lib\src\yearfrac.c" />
+    <ClCompile Include="lib\src\zcall.c" />
+    <ClCompile Include="lib\src\zcswap.c" />
+    <ClCompile Include="lib\src\zcswdate.c" />
+    <ClCompile Include="lib\src\zcswutil.c" />
+    <ClCompile Include="lib\src\zerocurve.c" />
+    <ClCompile Include="lib\src\zr2coup.c" />
+    <ClCompile Include="lib\src\zr2fwd.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lib\src\bsearch.inc" />
+    <None Include="lib\src\lintrp1.inc" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{9DC7948A-2324-42A1-920B-66E39CC4321A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>isdacdsmodel</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)isda_cds_model_c_v1.8.2\lib\include\isda\;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)isda_cds_model_c_v1.8.2\lib\include\isda\;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <OutDir>$ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$ProjectDir)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)isda_cds_model_c_v1.8.2\lib\include\isda\;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <OutDir>$ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$ProjectDir)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)isda_cds_model_c_v1.8.2\lib\include\isda\;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
