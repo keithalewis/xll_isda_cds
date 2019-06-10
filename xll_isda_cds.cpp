@@ -24,19 +24,19 @@ XLL_ENUM_DOC(FREQUENCY::FREQ_SEMIANNUAL, FREQ_SEMIANNUAL, L"JPMCDS", L"Twice per
 XLL_ENUM_DOC(FREQUENCY::FREQ_QUARTERLY, FREQ_QUARTERLY, L"JPMCDS", L"Four times per year.", L"Four times per year.");
 XLL_ENUM_DOC(FREQUENCY::FREQ_MONTHLY, FREQ_MONTHLY, L"JPMCDS", L"Twelve times per year.", L"Twelve times per year.");
 
-XLL_ENUM_DOC(RATE_BASIS::CONTINUOUS_BASIS, RATE_CONTINUOUS_BASIS, L"JPMCDS", L"Means continuous compounding", L"Means continuous compounding");
-XLL_ENUM_DOC(RATE_BASIS::DISCOUNT_RATE, RATE_DISCOUNT_RATE, L"JPMCDS", L"Discount RATE (not factor) K's b-Day", L"Discount RATE (not factor) K's b-Day");
-XLL_ENUM_DOC(RATE_BASIS::SIMPLE_BASIS, RATE_SIMPLE_BASIS, L"JPMCDS", L"Means simple interest", L"Means simple interest");
-XLL_ENUM_DOC(RATE_BASIS::ANNUAL_BASIS, RATE_ANNUAL_BASIS, L"JPMCDS", L"Annual compounding", L"Annual compounding");
-XLL_ENUM_DOC(RATE_BASIS::DISCOUNT_FACTOR, RATE_DISCOUNT_FACTOR, L"JPMCDS", L"Rate is stored as a discount factor", L"Rate is stored as a discount factor");
+XLL_ENUM_DOC(RATE_BASIS::CONTINUOUS_BASIS, RATE_CONTINUOUS_BASIS, L"JPMCDS", L"Continuous compounding.", L"Continuous compounding.");
+XLL_ENUM_DOC(RATE_BASIS::DISCOUNT_RATE, RATE_DISCOUNT_RATE, L"JPMCDS", L"Discount RATE (not factor) K's b-Day.", L"Discount RATE (not factor) K's b-Day.");
+XLL_ENUM_DOC(RATE_BASIS::SIMPLE_BASIS, RATE_SIMPLE_BASIS, L"JPMCDS", L"Simple interest.", L"Simple interest.");
+XLL_ENUM_DOC(RATE_BASIS::ANNUAL_BASIS, RATE_ANNUAL_BASIS, L"JPMCDS", L"Annual compounding.", L"Annual compounding.");
+XLL_ENUM_DOC(RATE_BASIS::DISCOUNT_FACTOR, RATE_DISCOUNT_FACTOR, L"JPMCDS", L"Rate is stored as a discount factor.", L"Rate is stored as a discount factor.");
 
-XLL_ENUM_DOC(DAY_COUNT_CONVENTION::BAD_DCC, DAY_COUNT_BAD_DCC, L"JPMCDS", L"Dummmy Day Count Conv for Brazilian bonds", L"Dummmy Day Count Conv for Brazilian bonds");
-XLL_ENUM_DOC(DAY_COUNT_CONVENTION::ACT_365, DAY_COUNT_ACT_365, L"JPMCDS", L"Actual/365", L"Actual/365");
-XLL_ENUM_DOC(DAY_COUNT_CONVENTION::ACT_365F, DAY_COUNT_ACT_365F, L"JPMCDS", L"Actual/365 Fixed", L"Actual/365 Fixed");
-XLL_ENUM_DOC(DAY_COUNT_CONVENTION::ACT_360, DAY_COUNT_ACT_360, L"JPMCDS", L"Actual/360", L"Actual/360");
-XLL_ENUM_DOC(DAY_COUNT_CONVENTION::B30_360, DAY_COUNT_B30_360, L"JPMCDS", L"30/360", L"30/360");
-XLL_ENUM_DOC(DAY_COUNT_CONVENTION::B30E_360, DAY_COUNT_B30E_360, L"JPMCDS", L"30E/360", L"30E/360");
-XLL_ENUM_DOC(DAY_COUNT_CONVENTION::ACT_ACT, DAY_COUNT_ACT_ACT, L"JPMCDS", L"Same as Actual/365", L"Same as Actual/365");
+XLL_ENUM_DOC(DAY_COUNT_CONVENTION::BAD_DCC, DAY_COUNT_BAD_DCC, L"JPMCDS", L"Dummmy Day Count Conv for Brazilian bonds.", L"Dummmy Day Count Conv for Brazilian bonds.");
+XLL_ENUM_DOC(DAY_COUNT_CONVENTION::ACT_365, DAY_COUNT_ACT_365, L"JPMCDS", L"Actual/365", L"Number of days divided by 365.");
+XLL_ENUM_DOC(DAY_COUNT_CONVENTION::ACT_365F, DAY_COUNT_ACT_365F, L"JPMCDS", L"Actual/365 Fixed", L"Number of days divided by 365 Fixed.");
+XLL_ENUM_DOC(DAY_COUNT_CONVENTION::ACT_360, DAY_COUNT_ACT_360, L"JPMCDS", L"Actual/360", L"Number of days divided by 360.");
+XLL_ENUM_DOC(DAY_COUNT_CONVENTION::B30_360, DAY_COUNT_B30_360, L"JPMCDS", L"30/360", L"30 days per month, 360 days per year.");
+XLL_ENUM_DOC(DAY_COUNT_CONVENTION::B30E_360, DAY_COUNT_B30E_360, L"JPMCDS", L"30E/360", L"30 days per month, 360 days per year European convention.");
+XLL_ENUM_DOC(DAY_COUNT_CONVENTION::ACT_ACT, DAY_COUNT_ACT_ACT, L"JPMCDS", L"Same as Actual/365.", L"Same as Actual/365.");
 XLL_ENUM_DOC(DAY_COUNT_CONVENTION::EFFECTIVE_RATE, DAY_COUNT_EFFECTIVE_RATE, L"JPMCDS", L"Effective rate - YF always 1", L"Effective rate - YF always 1");
 
 XLL_ENUM_DOC(ROLL_CONVENTION::ROLL_FOLLOW, ROLL_FOLLOW, L"JPMCDS", L"Following business day.", L"Following business day.");
@@ -44,15 +44,21 @@ XLL_ENUM_DOC(ROLL_CONVENTION::ROLL_PREVIOUS, ROLL_PREVIOUS, L"JPMCDS", L"Previou
 XLL_ENUM_DOC(ROLL_CONVENTION::ROLL_NONE, ROLL_NONE, L"JPMCDS", L"No adustment.", L"No adustment.");
 XLL_ENUM_DOC(ROLL_CONVENTION::ROLL_MODIFIED, ROLL_MODIFIED, L"JPMCDS", L"Following business day unless at end of month.", L"Following business day unless at end of month.");
 
-XLL_ENUM_DOC(INTERPOLATION_TYPE::LINEAR_FORWARDS, INTERPOLATION_TYPE_LINEAR_FORWARDS, L"JPMCDS", L"Linear forward interpolation", L"Linear forward interpolation");
-XLL_ENUM_DOC(INTERPOLATION_TYPE::FLAT_FORWARDS, INTERPOLATION_TYPE_FLAT_FORWARDS, L"JPMCDS", L"Flat forward interpolation", L"Flat forward interpolation");
+XLL_ENUM_DOC(INTERPOLATION_TYPE::LINEAR_FORWARDS, INTERPOLATION_TYPE_LINEAR_FORWARDS, L"JPMCDS", L"Linear forward interpolation.", L"Linear forward interpolation.");
+XLL_ENUM_DOC(INTERPOLATION_TYPE::FLAT_FORWARDS, INTERPOLATION_TYPE_FLAT_FORWARDS, L"JPMCDS", L"Flat forward interpolation.", L"Flat forward interpolation.");
+
+XLL_ENUM_DOC(PROT_PAY_DEF, PROT_PAY_DEF, L"JPMCDS", L"Default", L"Protection payment is due at default.");
+XLL_ENUM_DOC(PROT_PAY_MAT, PROT_PAY_MAT, L"JPMCDS", L"Maturity", L"Protection payment is only due at the maturity of the protection leg.");
+
+XLL_ENUM_DOC(ACCRUAL_PAY_NONE, ACCRUAL_PAY_NONE, L"JPMCDS", L"None", L"No accrual in case of default.");
+XLL_ENUM_DOC(ACCRUAL_PAY_ALL, ACCRUAL_PAY_ALL, L"JPMCDS", L"All", L"Interest since the last accrual date is due in case of default.");
 
 AddIn xai_jpmcds_instrument_money_market(
     Function(XLL_HANDLE, L"?xll_jpmcds_instrument_money_market", L"JPMCDS.INSTRUMENT.MONEY.MARKET")
     .Arg(XLL_LONG, L"count", L"is the number of units in the tenor.")
-    .Arg(XLL_CSTRING4, L"unit", L"is the unit corresponding ot count.")
-    .Arg(XLL_LONG, L"dcc", L"is the day count convention. Default is Actual/360")
-    .Arg(XLL_LONG, L"roll", L"is the rolling convention for payment dates. Default is following business day.")
+    .Arg(XLL_CSTRING4, L"unit", L"is the unit corresponding to count.")
+    .Arg(XLL_LONG, L"dcc", L"is the day count convention for the DAY_COUNT_* enumeration. Default is Actual/360")
+    .Arg(XLL_LONG, L"roll", L"is the rolling convention for payment dates from the ROLL_* enumeration. Default is following business day.")
     .Arg(XLL_LONG, L"days", L"is the number of days it takes to settle. Default is 3.")
     .Uncalced()
     .FunctionHelp(L"Return a handle to a money market instrument.")
@@ -86,7 +92,7 @@ AddIn xai_jpmcds_instrument_money_market_set(
     Function(XLL_HANDLE, L"?xll_jpmcds_instrument_money_market_set", L"JPMCDS.INSTRUMENT.MONEY.MARKET.SET")
     .Arg(XLL_HANDLE, L"hande", L"is a handle returned by PMCDS.INSTRUMENT.MONEY.MARKET.")
     .Arg(XLL_DOUBLE, L"rate", L"is the money market rate.")
-    .Arg(XLL_DOUBLE, L"valuation", L"is the valuation date for rate.")
+    .Arg(XLL_DOUBLE, L"valuation", L"is the valuation date of the rate.")
     .FunctionHelp(L"Return a handle to a money market instrument after setting rate and valuation.")
     .Category(L"JPMCDS")
     .Documentation(L"Fix the rate and valuation date.")
@@ -109,9 +115,9 @@ HANDLEX WINAPI xll_jpmcds_instrument_money_market_set(HANDLEX h, double rate, do
 AddIn xai_jpmcds_instrument_money_market_flows(
     Function(XLL_FP, L"?xll_jpmcds_instrument_money_market_flows", L"JPMCDS.INSTRUMENT.MONEY.MARKET.FLOWS")
     .Arg(XLL_HANDLE, L"hande", L"is a handle returned by JPMCDS.INSTRUMENT.MONEY.MARKET.")
-    .FunctionHelp(L"Return an array with first row cash flow dates and second row cash flow amounts.")
+    .FunctionHelp(L"Return a two row array of cash flow dates and amounts.")
     .Category(L"JPMCDS")
-    .Documentation(L"Return dates and amounts associated with the money market instrument.")
+    .Documentation(L"Return cash flow dates and amounts associated with the money market instrument.")
 );
 _FP12* WINAPI xll_jpmcds_instrument_money_market_flows(HANDLEX h)
 {
@@ -140,8 +146,8 @@ AddIn xai_jpmcds_instrument_interest_rate_swap(
     .Arg(XLL_LONG, L"count", L"is the number of units in the tenor.")
     .Arg(XLL_CSTRING4, L"unit", L"is the unit corresponding ot count.")
     .Arg(XLL_LONG, L"freq", L"is the payment frequency from the FREQ_* enumeration.")
-    .Arg(XLL_LONG, L"dcc", L"is the day count convention. Default is Actual/360")
-    .Arg(XLL_LONG, L"roll", L"is the rolling convention for payment dates. Default is modified following business day.")
+    .Arg(XLL_LONG, L"dcc", L"is the day count convention from the DAY_COUNT_* enumeration. Default is Actual/360")
+    .Arg(XLL_LONG, L"roll", L"is the rolling convention for payment dates from the ROLL_* enumeration. Default is modified following business day.")
     .Arg(XLL_LONG, L"days", L"is the number of days it takes to settle. Default is 3.")
     .Uncalced()
     .FunctionHelp(L"Return a handle to a swap instrument.")
@@ -197,6 +203,35 @@ HANDLEX WINAPI xll_jpmcds_instrument_interest_rate_swap_set(HANDLEX h, double ra
     return h;
 }
 
+AddIn xai_jpmcds_instrument_contingent_leg(
+    Function(XLL_HANDLE, L"?xll_jpmcds_instrument_contingent_leg", L"JPMCDS.INSTRUMENT.CONTINGENT.LEG")
+    .Arg(XLL_DOUBLE, L"startDate", L"is the start of protection.")
+    .Arg(XLL_DOUBLE, L"endDate", L"is the end of protection.")
+    .Arg(XLL_DOUBLE, L"notional", L"is the notional amount of protection. Default is 1.")
+    .Arg(XLL_LONG, L"payType", L"is the type of protection from the PROT_* enumeration. Default is PROT_PAY_DEF.")
+    .Arg(XLL_BOOL, L"protectStart", L"start protection the day after start date. Default is false.")
+    .FunctionHelp(L"Return a handle to a contingent leg.")
+    .Category(L"JMPCDS")
+    .Documentation(L"")
+);
+HANDLEX WINAPI xll_jpmcds_instrument_contingent_leg(double startDate, double endDate, double notional,
+    TProtPayConv payType, BOOL protectStart)
+{
+#pragma XLLEXPORT
+    handlex h;
+
+    if (notional == 0)
+        notional = 1;
+    if (payType == 0)
+        payType = PROT_PAY_DEF;
+
+    handle<Instrument::ContingentLeg> h_(new Instrument::ContingentLeg(excel2TDate(startDate), excel2TDate(endDate),
+        notional, payType, protectStart));
+    h = h_.get();
+
+    return h;
+}
+
 AddIn xai_jpmcds_tcurve(
     Function(XLL_HANDLE, L"?xll_jpmcds_tcurve", L"JPMCDS.TCURVE")
     .Arg(XLL_DOUBLE, L"baseDate", L"is the base date of the curve.")
@@ -229,6 +264,38 @@ HANDLEX WINAPI xll_jpmcds_tcurve(double base, _FP12* dates, _FP12* rates, RATE_B
     }
 
     return h;
+}
+
+AddIn xai_jpmcds_tcurve_flows(
+    Function(XLL_FP, L"?xll_jpmcds_tcurve_flows", L"JPMCDS.TCURVE.FLOWS")
+    .Arg(XLL_HANDLE, L"handle", L"is a handle to a Curve.")
+    .FunctionHelp(L"Return two row array of dates and rates in curve.")
+    .Category(L"JMPCDS")
+    .Documentation(L"")
+);
+const _FP12* WINAPI xll_jpmcds_tcurve_flows(HANDLEX h)
+{
+#pragma XLLEXPORT
+    static xll::FP12 dr;
+
+    try {
+        handle<Curve> h_(h);
+        ensure (h_.ptr() || !__FUNCTION__ ": failed to lookup pointer.");
+        int n = h_->size();
+        dr.resize(2, n);
+        auto pt = h_->points();
+        for (int i = 0; i < n; ++i) {
+            dr(0, i) = TDate2excel(pt[i].fDate);
+            dr(1, i) = pt[i].fRate;
+        }
+    }
+    catch (const std::exception& ex) {
+        XLL_ERROR(ex.what());
+
+        return 0;
+    }
+
+    return dr.get();
 }
 
 AddIn xai_jpmcds_tcurve_discount(
@@ -304,7 +371,7 @@ AddIn xai_jpmcds_build_ir_zero_curve(
     .Uncalced()
     .FunctionHelp(L"Return handle to zero curve.")
     .Category(L"JPMCDS")
-    .Documentation(L"Create a curve from money market instruments and swaps.")
+    .Documentation(L"Bootstrap a curve from money market instruments and swaps.")
 );
 HANDLEX WINAPI xll_jpmcds_build_ir_zero_curve(double valueDate, const _FP12* cashs, const _FP12* swaps)
 {
@@ -366,6 +433,7 @@ HANDLEX WINAPI xll_jpmcds_build_ir_zero_curve(double valueDate, const _FP12* cas
                 fixedFreq, floatFreq, fixedDCC, floatDCC, 0, rollConv, holidays));
         }
         handle<Curve> h_(new Curve(curve));
+        //handle<Curve> h_(&curve);
         //curve.~Curve(); //??? can we move it ???
         h = h_.get();
     }
@@ -376,6 +444,22 @@ HANDLEX WINAPI xll_jpmcds_build_ir_zero_curve(double valueDate, const _FP12* cas
     return h;
 }
 
-    
+// JpmcdsCdsoneSpread - flat spread
+AddIn xai_jpmcds_one_spread(
+    Function(XLL_DOUBLE, L"?xll_jpmcds_one_spread", L"JPMCDS_ONE_SPREAD")
+    .Arg(XLL_HANDLE, L"curve", L"is a curve.")
+    .FunctionHelp(L"Return the constant spread repricing the CDS.")
+);
+double WINAPI xll_jpmcds_one_spread(HANDLEX h)
+{
+#pragma XLLEXPORT
+    double spread = std::numeric_limits<double>::quiet_NaN();
+
+    h = h;
+
+    return spread;
+}
+
+// JpmcdsCdsoneUpfrontCharge - upfront given flat spread
     
     

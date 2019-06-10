@@ -3,6 +3,9 @@
 #include <limits>
 #include <utility>
 #include <vector>
+#include "cds.h"
+#include "cx.h"
+#include "feeleg.h"
 #include "ldate.h"
 #include "tcurve.h"
 
@@ -173,6 +176,7 @@ namespace Jpmcds {
             {
                 fixedLeg.rate = rate_;
                 valuation = valuation;
+                //???JpmcdsDateListMakeRegular
 
                 return *this;
             }
@@ -181,7 +185,61 @@ namespace Jpmcds {
                 return fixedLeg.maturity(valuation);
             }
         };
-#include "cx.h"
+//#include "cx.h"
+        struct ContingentLeg : public TContingentLeg {
+            ContingentLeg(
+                TDate           startDate,
+                TDate           endDate,
+                double          notional = 1,
+                TProtPayConv    payType = PROT_PAY_DEF,
+                TBoolean        protectStart = false)
+                : TContingentLeg{startDate - protectStart, endDate, notional, payType, protectStart}
+            { 
+            }
+        };
+        struct FeeLeg {
+            TFeeLeg* feeLeg;
+            FeeLeg(
+                TDate           startDate,
+                TDate           endDate,
+                TBoolean        payAccOnDefault,
+                TDateInterval  *dateInterval,
+                TStubMethod    *stubType,
+                double          notional,
+                double          couponRate,
+                long            paymentDcc,
+                long            badDayConv,
+                char           *calendar,
+                TBoolean        protectStart)
+                : feeLeg(JpmcdsCdsFeeLegMake(startDate, endDate, payAccOnDefault, dateInterval, 
+                    stubType, notional, couponRate, paymentDcc, badDayConv, calendar, protectStart))
+            {
+            }
+            ~FeeLeg()
+            {
+                JpmcdsFeeLegFree(feeLeg);
+            }
+            /*
+            double PresentValue()
+            {
+                double pv;
+
+                int rc = JpmcdsFeeLegPV(feeLeg, today, stepinDate, valueDate, discount, spread, payAccrued, &pv);
+
+                return pv;
+            }
+            
+            double AccruedInterest(TDate today)
+            {
+                double ai;
+
+                if (SUCCESS != FeeLegAI(feeLeg, today, &ai)) // FeeLegAI not in header file
+                    throw std::runtime_error("FeeLetIA failed");
+
+                return ai;
+            }
+            */
+        };
         struct CreditDefaultSwap {
             TContingentLeg contingentLeg; // protection leg
             TFeeLeg feeLeg;
@@ -205,6 +263,12 @@ namespace Jpmcds {
         Curve(::TCurve* p)
             : p(::JpmcdsCopyCurve(p))
         { }
+        /*
+        Curve& operator=(::TCurve* p_)
+        {
+            p = p_; // too dangerous
+        }
+        */
         Curve(const Curve& curve)
             : Curve(curve.p)
         { }
@@ -229,6 +293,14 @@ namespace Jpmcds {
         operator ::TCurve*()
         {
             return p;
+        }
+        int size() const
+        {
+            return p->fNumItems;
+        }
+        const TRatePt* points() const
+        {
+            return p->fArray;
         }
         // Calculate discount factor for specified date and zero curve.
         double DiscountDate(TDate date, long interpType = JPMCDS_FLAT_FORWARDS)
