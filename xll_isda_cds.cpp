@@ -204,12 +204,13 @@ HANDLEX WINAPI xll_jpmcds_instrument_interest_rate_swap_set(HANDLEX h, double ra
 }
 
 AddIn xai_jpmcds_instrument_contingent_leg(
-    Function(XLL_HANDLE, L"?xll_jpmcds_instrument_contingent_leg", L"JPMCDS.INSTRUMENT.CONTINGENT.LEG")
+    Function(XLL_HANDLE, L"?xll_jpmcds_instrument_contingent_leg", L"JPMCDS.INSTRUMENT.CDS.CONTINGENT.LEG")
     .Arg(XLL_DOUBLE, L"startDate", L"is the start of protection.")
     .Arg(XLL_DOUBLE, L"endDate", L"is the end of protection.")
     .Arg(XLL_DOUBLE, L"notional", L"is the notional amount of protection. Default is 1.")
     .Arg(XLL_LONG, L"payType", L"is the type of protection from the PROT_* enumeration. Default is PROT_PAY_DEF.")
     .Arg(XLL_BOOL, L"protectStart", L"start protection the day after start date. Default is false.")
+    .Uncalced()
     .FunctionHelp(L"Return a handle to a contingent leg.")
     .Category(L"JMPCDS")
     .Documentation(L"")
@@ -220,14 +221,102 @@ HANDLEX WINAPI xll_jpmcds_instrument_contingent_leg(double startDate, double end
 #pragma XLLEXPORT
     handlex h;
 
-    if (notional == 0)
-        notional = 1;
-    if (payType == 0)
-        payType = PROT_PAY_DEF;
+    try {
+        if (notional == 0)
+            notional = 1;
+        if (payType == 0)
+            payType = PROT_PAY_DEF;
 
-    handle<Instrument::ContingentLeg> h_(new Instrument::ContingentLeg(excel2TDate(startDate), excel2TDate(endDate),
-        notional, payType, protectStart));
-    h = h_.get();
+        handle<Instrument::ContingentLeg> h_(new Instrument::ContingentLeg(excel2TDate(startDate), excel2TDate(endDate),
+            notional, payType, protectStart));
+        ensure (h_.ptr());
+        h = h_.get();
+    }
+    catch (const std::exception& ex) {
+        XLL_ERROR(ex.what());
+    }
+
+    return h;
+}
+
+AddIn xai_jpmcds_instrument_fee_leg(
+    Function(XLL_HANDLE, L"?xll_jpmcds_instrument_fee_leg", L"JPMCDS.INSTRUMENT.CDS.FEE.LEG")
+    .Arg(XLL_DOUBLE, L"startDate", L"is the start of protection.")
+    .Arg(XLL_DOUBLE, L"endDate", L"is the end of protection.")
+    .Arg(XLL_DOUBLE, L"coupon", L"is the coupon rate.")
+    .Arg(XLL_BOOL, L"accOnDefault", L"is a pay accrual on defalut boolean.")
+    .Arg(XLL_LONG, L"count", L"is the number of units in the payment interval. Default is 3.")
+    .Arg(XLL_CSTRING4, L"unit", L"is the unit corresponding to the payment interval. Default is 'M' for months.")
+    // stub method { pay at end, long stub }
+    .Arg(XLL_DOUBLE, L"notional", L"is the notional amount of protection. Default is 1.")
+    .Arg(XLL_LONG, L"dcc", L"is the day count convention from the DAY_COUNT_* enumeration. Default is Actual/360")
+    .Arg(XLL_LONG, L"roll", L"is the rolling convention for payment dates from the ROLL_* enumeration. Default is modified following business day.")
+    .Arg(XLL_BOOL, L"protectStart", L"start protection the day after start date. Default is false.")
+    .Uncalced()
+    .FunctionHelp(L"Return a handle to a fee leg.")
+    .Category(L"JMPCDS")
+    .Documentation(L"")
+);
+HANDLEX WINAPI xll_jpmcds_instrument_fee_leg(double startDate, double endDate, double coupon,
+    BOOL accOnDefault, LONG count, const char* unit, double notional, DAY_COUNT_CONVENTION dcc,
+    ROLL_CONVENTION roll, BOOL protectStart)
+{
+#pragma XLLEXPORT
+    handlex h;
+
+    try {
+        if (count == 0)
+            count = 3;
+        if (unit == 0 || *unit == 0)
+            unit = "M";
+        if (notional == 0)
+            notional = 1;
+        if (dcc == 0)
+            dcc = ACT_360;
+        if (roll == 0)
+            roll = ROLL_MODIFIED;
+
+        TStubMethod stubType{false,false};
+        char* calendar = const_cast<char*>("NONE");
+        TDateInterval dateInterval{count, unit[0]};
+        handle<Instrument::FeeLeg> h_(new Instrument::FeeLeg(excel2TDate(startDate), excel2TDate(endDate),
+            accOnDefault, &dateInterval, &stubType, notional, coupon, dcc, roll, calendar, protectStart));
+        ensure(h_.ptr());
+        h = h_.get();
+    }
+    catch (const std::exception& ex) {
+        XLL_ERROR(ex.what());
+    }
+
+    return h;
+}
+
+AddIn xai_jpmcds_instrument_cds(
+    Function(XLL_HANDLE, L"?xll_jpmcds_instrument_cds", L"JPMCDS.INSTRUMENT.CDS")
+    .Arg(XLL_HANDLE, L"contingentLeg", L"is a handle to a contingent leg.")
+    .Arg(XLL_HANDLE, L"feeLeg", L"is a handle to a fee leg.")
+    .Uncalced()
+    .FunctionHelp(L"Return a handle to a credit default swap.")
+    .Category(L"JMPCDS")
+    .Documentation(L"")
+);
+HANDLEX WINAPI xll_jpmcds_instrument_cds(HANDLEX contingentLeg, HANDLEX feeLeg))
+{
+#pragma XLLEXPORT
+    handlex h;
+
+    try {
+        handle<Instrument::ContingentLeg> c_(contingentLeg);
+        ensure (c_.ptr());
+        handle<Instrument::FeeLeg> f_(feeLeg);
+        ensure(f_.ptr());
+        handle<Instrument::CreditDefaultSwap> h_(new Instrument::CreditDefaultSwap(*c_, *f_));)
+        ensure(h_.ptr());
+        h = h_.get();
+    }
+    catch (const std::exception& ex) {
+        XLL_ERROR(ex.what());
+    }
 
     return h;
 }
@@ -266,14 +355,14 @@ HANDLEX WINAPI xll_jpmcds_tcurve(double base, _FP12* dates, _FP12* rates, RATE_B
     return h;
 }
 
-AddIn xai_jpmcds_tcurve_flows(
-    Function(XLL_FP, L"?xll_jpmcds_tcurve_flows", L"JPMCDS.TCURVE.FLOWS")
+AddIn xai_jpmcds_tcurve_points(
+    Function(XLL_FP, L"?xll_jpmcds_tcurve_points", L"JPMCDS.TCURVE.POINTS")
     .Arg(XLL_HANDLE, L"handle", L"is a handle to a Curve.")
     .FunctionHelp(L"Return two row array of dates and rates in curve.")
     .Category(L"JMPCDS")
     .Documentation(L"")
 );
-const _FP12* WINAPI xll_jpmcds_tcurve_flows(HANDLEX h)
+const _FP12* WINAPI xll_jpmcds_tcurve_points(HANDLEX h)
 {
 #pragma XLLEXPORT
     static xll::FP12 dr;
@@ -388,7 +477,7 @@ HANDLEX WINAPI xll_jpmcds_build_ir_zero_curve(double valueDate, const _FP12* cas
             DAY_COUNT_CONVENTION mmDCC = ACT_360;
             for (int i = 0; i < nCash; ++i) {
                 handle<Instrument::MoneyMarket> hi(cashs->array[i]);
-                ensure (hi);
+                ensure (hi.ptr());
                 if (i == 0)
                     mmDCC = hi->dcc;
                 else
@@ -444,6 +533,16 @@ HANDLEX WINAPI xll_jpmcds_build_ir_zero_curve(double valueDate, const _FP12* cas
     return h;
 }
 
+/*
+// JpmcdsCdsoneUpfrontCharge - upfront given flat spread
+AddIn xai_jpmcds_upfront_flat(
+    Function(XLL_DOUBLE, L"?xll_jpmcds_upfront_flat", L"JPMCDS.UPFRONT.FLAT")
+    .Arg(XLL_HANDLE, L"curve", L"is a handle to a curve.")
+    .Arg(XLL_HANDLE, L"cds", L"is a handle to a credit default swap.")
+    .FunctionHelp(L"Return the up-front fee for a flat credit spread.")
+);
+*/
+
 // JpmcdsCdsoneSpread - flat spread
 AddIn xai_jpmcds_one_spread(
     Function(XLL_DOUBLE, L"?xll_jpmcds_one_spread", L"JPMCDS_ONE_SPREAD")
@@ -460,6 +559,5 @@ double WINAPI xll_jpmcds_one_spread(HANDLEX h)
     return spread;
 }
 
-// JpmcdsCdsoneUpfrontCharge - upfront given flat spread
     
     

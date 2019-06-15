@@ -194,8 +194,11 @@ namespace Jpmcds {
                 TProtPayConv    payType = PROT_PAY_DEF,
                 TBoolean        protectStart = false)
                 : TContingentLeg{startDate - protectStart, endDate, notional, payType, protectStart}
-            { 
-            }
+            { }
+            ContingentLeg(const ContingentLeg&) = default;
+            ContingentLeg& operator=(const ContingentLeg&) = default;
+            ~ContingentLeg()
+            { }
         };
         struct FeeLeg {
             TFeeLeg* feeLeg;
@@ -213,8 +216,9 @@ namespace Jpmcds {
                 TBoolean        protectStart)
                 : feeLeg(JpmcdsCdsFeeLegMake(startDate, endDate, payAccOnDefault, dateInterval, 
                     stubType, notional, couponRate, paymentDcc, badDayConv, calendar, protectStart))
-            {
-            }
+            { }
+            FeeLeg(const FeeLeg&) = delete;
+            FeeLeg& operator=(const FeeLeg&) = delete;
             ~FeeLeg()
             {
                 JpmcdsFeeLegFree(feeLeg);
@@ -243,6 +247,7 @@ namespace Jpmcds {
         struct CreditDefaultSwap {
             TContingentLeg contingentLeg; // protection leg
             TFeeLeg feeLeg;
+
         };
 
     } // namespace Instrument
