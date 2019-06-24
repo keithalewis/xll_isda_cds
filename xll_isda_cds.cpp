@@ -300,7 +300,7 @@ AddIn xai_jpmcds_instrument_cds(
     .Category(L"JMPCDS")
     .Documentation(L"")
 );
-HANDLEX WINAPI xll_jpmcds_instrument_cds(HANDLEX contingentLeg, HANDLEX feeLeg))
+HANDLEX WINAPI xll_jpmcds_instrument_cds(HANDLEX contingentLeg, HANDLEX feeLeg)
 {
 #pragma XLLEXPORT
     handlex h;
@@ -310,9 +310,11 @@ HANDLEX WINAPI xll_jpmcds_instrument_cds(HANDLEX contingentLeg, HANDLEX feeLeg))
         ensure (c_.ptr());
         handle<Instrument::FeeLeg> f_(feeLeg);
         ensure(f_.ptr());
-        handle<Instrument::CreditDefaultSwap> h_(new Instrument::CreditDefaultSwap(*c_, *f_));)
+        /*
+        handle<Instrument::CreditDefaultSwap> h_(new Instrument::CreditDefaultSwap{*c_, *f_});
         ensure(h_.ptr());
         h = h_.get();
+        */
     }
     catch (const std::exception& ex) {
         XLL_ERROR(ex.what());
